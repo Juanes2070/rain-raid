@@ -1,0 +1,15 @@
+name: rain-raid
+
+dependencies:
+  - python=3.9
+  - numpy
+  - pandas
+  - netCDF4
+  - pip
+  - conda-forge::rioxarray
+  - conda-forge::arm_pyart
+  - conda-forge::wradlib
+  - conda-forge::bs4
+  - pip:
+    - tkcalendar
+    - auto-py-to-exe
