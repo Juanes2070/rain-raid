@@ -11,7 +11,7 @@
   },
   {
    "optionDest": "onefile",
-   "value": false
+   "value": true
   },
   {
    "optionDest": "console",
@@ -111,10 +111,6 @@
   },
   {
    "optionDest": "datas",
-   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/Main_GUI.py;."
-  },
-  {
-   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/polar_to_geo.py;."
   },
   {
@@ -127,11 +123,19 @@
   },
   {
    "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/Radar_GUI.py;."
+  },
+  {
+   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/ref_to_pp.py;."
   },
   {
    "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/ref_to_pp_settings_window.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/res_path.py;."
   },
   {
    "optionDest": "datas",

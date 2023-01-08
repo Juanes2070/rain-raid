@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+import res_path
 from hover_info import CreateToolTip
 from PIL import ImageTk,Image
 
@@ -118,7 +119,9 @@ class Satelite_Elements:
 		self.relacion_label.configure(text='Login EarthData')
 		self.relacion_label.grid(column='0', row='0', padx='0',sticky='w')
 
-		self.q_mark = ImageTk.PhotoImage(Image.open("img/question_icon.png"))
+		img_path = res_path.resource_path("img/question_icon.png")
+
+		self.q_mark = ImageTk.PhotoImage(Image.open(img_path))
 		self.relacion_label_q = ttk.Label(master=self.login_frame, image=self.q_mark)
 		self.relacion_label_q.grid(column='1', row='0', sticky='w')
 
