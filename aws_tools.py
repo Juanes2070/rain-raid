@@ -3,11 +3,13 @@ import tkinter as tk
 import datetime
 import os
 import sort_by_interval
+from botocore import UNSIGNED
+from botocore.config import Config
 from multiprocessing import Pool
 from itertools import repeat
 
 def get_aws_folders(bucket_name,prefix):
-    s3 = boto3.client('s3')
+    s3 = boto3.client('s3',config=Config(signature_version=UNSIGNED))
     objects = s3.list_objects(Bucket=bucket_name, Prefix=prefix, Delimiter='/')
     folders = objects['CommonPrefixes']
     names = []

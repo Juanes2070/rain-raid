@@ -1,9 +1,11 @@
 import os
 import boto3
+from botocore import UNSIGNED
+from botocore.config import Config
 from datetime import datetime
 
 def get_s3_file_list(bucket_name,prefix):
-    s3 = boto3.client('s3')
+    s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
     object_keys = []
     response = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
     keys = []
