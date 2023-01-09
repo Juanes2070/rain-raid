@@ -20,6 +20,18 @@ def get_folderpath(text_vaiable):
     folder_selected = filed.askdirectory()
     text_vaiable.set(folder_selected+"/")
 
+def panel_expand(panel_name, row, up_arrow, down_arrow, state_var):
+    if state_var.get() == False:
+        panel_name.grid(column='0', row=row)
+        down_arrow.grid_forget()
+        up_arrow.grid(row='0',column='1')
+        state_var.set(True)
+    else:
+        panel_name.grid_forget()
+        up_arrow.grid_forget()
+        down_arrow.grid(row='0', column='1')
+        state_var.set(False)
+
 def get_radar_list(self):
     sta_date = self.start_date_entry.get_date()
     end_date = self.end_date_entry.get_date()

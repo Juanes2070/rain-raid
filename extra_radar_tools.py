@@ -1,4 +1,4 @@
-        self.polflat_frame = ttk.Frame(self.left_frame)
+        self.polflat_frame = ttk.Frame(self.download_ideam_frame)
         self.polflat_frame.configure(height='100', width='120',borderwidth = '1', relief='ridge',padding='5')
         #self.polflat_frame.grid(column='0', row='1',sticky='ew')
 

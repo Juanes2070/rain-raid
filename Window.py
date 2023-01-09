@@ -6,15 +6,16 @@ import Radar_functions_2
 import Satellite_Functions
 import ref_to_pp_settings_window
 
+
 class MainWindow:
-    def __init__(self,master=None):
-        #Main notebook
-        self.root = tk.Tk(master) #Makes the window
-        self.root.wm_title("Rainraid V0.8") #Makes the title that will appear in the top left
-        self.root.config(background = "#FFFFFF")
+    def __init__(self, master=None):
+        # Main notebook
+        self.root = tk.Tk(master)  # Makes the window
+        self.root.wm_title("Rainraid V0.8")  # Makes the title that will appear in the top left
+        self.root.config(background="#FFFFFF")
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack()
-        
+
         # self.radar_frame = ttk.Frame(self.notebook)
         self.radar_frame2 = ttk.Frame(self.notebook)
         self.sat_frame = ttk.Frame(self.notebook)
@@ -25,9 +26,8 @@ class MainWindow:
 
         # self.notebook.add(self.radar_frame, text='Radar')
         self.notebook.add(self.radar_frame2, text='Radar Tools')
-        #self.notebook.add(self.sat_frame, text='Satelite')
 
-
+        # self.notebook.add(self.sat_frame, text='Satelite')
 
         # def ch_par_fr():
         #     Radar_functions.change_parameters_frame(self.RadarPanel)
@@ -92,14 +92,26 @@ class MainWindow:
         # self.RadarPanel.auto_t_radio.configure(command=autotime_click)
         # self.RadarPanel.main_button.configure(command=radar_run)
 
-
-        self.Radar_Panel.out_down_folder_button.configure(command= lambda: get_f_path(self.Radar_Panel.out_donwload_folder_path))
+        self.Radar_Panel.out_down_folder_button.configure(
+            command=lambda: get_f_path(self.Radar_Panel.out_donwload_folder_path))
         self.Radar_Panel.avail_radar_button.configure(command=radar_list)
         self.Radar_Panel.save_nc_checkbox.configure(command=interpolate_unlock)
         self.Radar_Panel.save_tiff_checkbox.configure(command=interpolate_unlock)
         self.Radar_Panel.down_button.configure(command=ideam_download)
 
+        self.Radar_Panel.download_title.bind("<Button-1>", lambda event: Radar_functions_2.panel_expand(
+            panel_name=self.Radar_Panel.download_ideam_content,
+            row='1',
+            up_arrow=self.Radar_Panel.ideam_up_arrow,
+            down_arrow=self.Radar_Panel.ideam_down_arrow,
+            state_var=self.Radar_Panel.dowload_ideam_frame_open))
 
+        self.Radar_Panel.ref_to_pp_title.bind("<Button-1>", lambda event: Radar_functions_2.panel_expand(
+            panel_name=self.Radar_Panel.ref_to_pp_content,
+            row='1',
+            up_arrow=self.Radar_Panel.ref_to_pp_up_arrow,
+            down_arrow=self.Radar_Panel.ref_to_pp_down_arrow,
+            state_var=self.Radar_Panel.ref_to_pp_frame_open))
 
         # self.Radar_Panel2.in_polflat_folder_button.configure(command= lambda: get_f_path(self.Radar_Panel2.in_polflat_folder_path))
         # self.Radar_Panel2.out_polflat_folder_button.configure(command= lambda: get_f_path(self.Radar_Panel2.out_polflat_folder_path))
@@ -110,17 +122,18 @@ class MainWindow:
         # self.Radar_Panel2.raw_to_nc_main_button.configure(command=raw_processing)
 
         self.Radar_Panel.in_ref_to_pp_folder_path.trace('w', unlock_nc_vars)
-        self.Radar_Panel.in_ref_to_pp_folder_button.configure(command=lambda: get_f_path(self.Radar_Panel.in_ref_to_pp_folder_path))
-        self.Radar_Panel.out_ref_to_pp_folder_button.configure(command=lambda: get_f_path(self.Radar_Panel.out_ref_to_pp_folder_path))
+        self.Radar_Panel.in_ref_to_pp_folder_button.configure(
+            command=lambda: get_f_path(self.Radar_Panel.in_ref_to_pp_folder_path))
+        self.Radar_Panel.out_ref_to_pp_folder_button.configure(
+            command=lambda: get_f_path(self.Radar_Panel.out_ref_to_pp_folder_path))
         # self.Radar_Panel2.out_ref_to_pp_mask_folder_button.configure(command=lambda: get_f_path(self.Radar_Panel2.ref_to_pp_mask_folder_path))
         self.Radar_Panel.ref_to_pp_config_button.config(command=settings_window)
         self.Radar_Panel.ref_to_pp_main_button.configure(command=radar_run)
 
         self.Radar_Panel.avail_radar_listbox.bind('<<ListboxSelect>>', radar_unlock)
 
-
         self.Sat_Panel.main_button.configure(command=satellite_run)
         self.Sat_Panel.mission.trace('w', miss_click)
 
     def start(self):
-        self.root.mainloop() #start monitoring and updating the GUI
+        self.root.mainloop()  # start monitoring and updating the GUI
