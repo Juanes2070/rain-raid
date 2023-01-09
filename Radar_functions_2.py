@@ -67,28 +67,52 @@ def download_raw(self):
                                  gui=self)
     return out_raw_folder
 
-def convert_to_nc(self,in_raw_folder):
+def convert_to_nc(self,in_raw_folder,out_folder):
 
     self.out_textbox.insert(tk.END, "Convirtiendo archivos a netCDF4... \n")
     self.root.update()
-
-    out_folder = self.out_donwload_folder_path.get()
-    out_nc_folder = out_folder + "netCDF/"
-    os.mkdir(out_nc_folder)
-    days = os.listdir(in_raw_folder)
     interpolate = self.interp_options.get()
-    for day in days:
-        files = os.listdir(in_raw_folder + day + "/")
-        file_list = []
-        for file in files:
-            file_list.append(in_raw_folder + day + "/" + file)
 
+
+    folder_list = []
+    file_path_lists = []
+    for root, dirs, files in os.walk(in_raw_folder):
+        file_paths = [os.path.join(root, file) for file in files]
+        file_path_lists.append(file_paths)
+
+        for folder in dirs:
+            folder_route = os.path.join(out_folder,folder+'/')
+            os.mkdir(folder_route)
+            folder_list.append(folder_route)
+
+    if len(folder_list) == 0:
+        folder_list.append(out_folder+'/')
+    else:
+        file_path_lists.pop(0)
+
+    for i, out_folder in enumerate(folder_list):
         with Pool() as p:
-            p.starmap(pyart_tools.raw_to_netcdf, zip(file_list, repeat(out_nc_folder),repeat(interpolate)))
+            p.starmap(pyart_tools.raw_to_netcdf, zip(file_path_lists[i], repeat(out_folder), repeat(interpolate)))
 
-        self.out_textbox.insert(tk.END, "Coversión finalizada \n")
-        self.root.update()
-    return out_nc_folder
+    self.out_textbox.insert(tk.END, "Coversión finalizada \n")
+    self.root.update()
+
+def convert_to_nc_standalone(self):
+
+    self.out_textbox.configure(state='normal')
+    self.out_textbox.delete('1.0', tk.END)
+    self.root.update()
+
+    in_folder = self.in_raw_to_nc_folder_path.get()
+    out_folder = self.out_raw_to_nc_folder_path.get()
+
+    try:
+        shutil.rmtree(out_folder)
+        os.mkdir(out_folder)
+    except:
+        pass
+
+    convert_to_nc(self,in_folder,out_folder)
 
 def convert_to_tiff(self,in_nc_folder):
 
@@ -129,6 +153,8 @@ def main_download(self):
     try:
         shutil.rmtree(out_folder)
         os.mkdir(out_folder)
+        nc_folder = out_folder+'netCDF4/'
+        os.mkdir(nc_folder)
     except:
         pass
 
@@ -137,28 +163,28 @@ def main_download(self):
 
     if save_raw == True and save_nc == True and save_tiff == False:
         raw_folder = download_raw(self)
-        convert_to_nc(self,raw_folder)
+        convert_to_nc(self,raw_folder,nc_folder)
 
     if save_raw == True and save_nc == True and save_tiff == True:
         raw_folder = download_raw(self)
-        nc_folder = convert_to_nc(self, raw_folder)
+        convert_to_nc(self, raw_folder,nc_folder)
         convert_to_tiff(self,nc_folder)
 
     if save_raw == False and save_nc == True and save_tiff == False:
         raw_folder = download_raw(self)
-        convert_to_nc(self, raw_folder)
+        convert_to_nc(self, raw_folder,nc_folder)
         shutil.rmtree(raw_folder)
 
     if save_raw == False and save_nc == True and save_tiff == True:
         raw_folder = download_raw(self)
-        nc_folder= convert_to_nc(self, raw_folder)
+        convert_to_nc(self, raw_folder,nc_folder)
         convert_to_tiff(self,nc_folder)
 
         shutil.rmtree(raw_folder)
 
     if save_raw == False and save_nc == False and save_tiff == True:
         raw_folder = download_raw(self)
-        nc_folder = convert_to_nc(self, raw_folder)
+        convert_to_nc(self, raw_folder,nc_folder)
         convert_to_tiff(self,nc_folder)
 
         shutil.rmtree(raw_folder)
@@ -193,7 +219,6 @@ def unlock_nc_vars(self):
         self.lon_var_combo.configure(state='enabled', values=vars)
         self.lon_var.set(vars[2])
         self.ref_to_pp_main_button.configure(state='enabled')
-
 
 def run_ref_to_pp(self):
 
@@ -253,5 +278,6 @@ def run_ref_to_pp(self):
 
 
     #start_time = datetime.datetime.now()
+
 
 

@@ -14,3 +14,6 @@ def set_default_values(self):
 
     self.in_ref_to_pp_folder_path.set('D:/Downloads/20210301/')
     self.out_ref_to_pp_folder_path.set('D:/Downloads/SALIDA_RADAR/')
+
+    self.out_raw_to_nc_folder_path.set(r'D:\Downloads\AWS_TEST\nc/')
+    self.in_raw_to_nc_folder_path.set(r'D:/Downloads/AWS_TEST/RAW/')
