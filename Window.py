@@ -36,9 +36,6 @@ class MainWindow:
         def miss_click(*args):
             Satellite_Functions.mission_click(self.Sat_Panel)
 
-        # def polar_conv_run():
-        #     Radar_functions_2.conv_polartoflat(self.Radar_Panel)
-
         self.raw_to_nc_gui = raw_to_nc_gui.Gui(self.Radar_Panel)
         self.ideam_gui = download_ideam_gui.Gui(self.Radar_Panel)
         self.ref_to_pp_gui = ref_to_pp_gui.Gui(self.Radar_Panel)
@@ -85,15 +82,15 @@ class MainWindow:
 
         self.pol_to_geo_gui.Radar_Panel.in_polflat_folder_button.configure(
             command=lambda: Radar_functions_2.get_folderpath(self.Radar_Panel.in_polflat_folder_path))
-        self.pol_to_geo_gui.Radar_Panel.out_polflat_folder_button.configure(
-            command=lambda: Radar_functions_2.get_folderpath(self.Radar_Panel.out_polflat_folder_path))
-        # self.pol_to_geo_gui.Radar_Panel.polflat_main_button.configure(
-        #     command = polar_conv_run)
+        self.pol_to_geo_gui.Radar_Panel.polflat_main_button.configure(
+            command=lambda: Radar_functions_2.convert_polar_to_geo_standalone(self.Radar_Panel))
 
         self.raw_to_nc_gui.Radar_Panel.in_raw_to_nc_folder_button.configure(
             command=lambda: Radar_functions_2.get_folderpath(self.Radar_Panel.in_raw_to_nc_folder_path))
         self.raw_to_nc_gui.Radar_Panel.out_raw_to_nc_folder_button.configure(
             command=lambda: Radar_functions_2.get_folderpath(self.Radar_Panel.out_raw_to_nc_folder_path))
+        self.raw_to_nc_gui.Radar_Panel.nc_conversion_checkbox.configure(
+            command=lambda: Radar_functions_2.nc_interpolate_unlock(self.Radar_Panel))
         self.raw_to_nc_gui.Radar_Panel.raw_to_nc_main_button.configure(
             command=lambda: Radar_functions_2.convert_to_nc_standalone(self.Radar_Panel))
 

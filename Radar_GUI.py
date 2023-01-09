@@ -33,8 +33,13 @@ class Radar_Elements:
 
         self.in_polflat_folder_path = tk.StringVar()
         self.out_polflat_folder_path = tk.StringVar()
+        self.pol_to_geo_interpolate = tk.StringVar()
+
         self.in_raw_to_nc_folder_path = tk.StringVar()
         self.out_raw_to_nc_folder_path = tk.StringVar()
+        self.raw_to_nc_conversion = tk.BooleanVar()
+        self.raw_to_nc_interpolate = tk.StringVar()
+
         self.in_ref_to_pp_folder_path = tk.StringVar()
         self.out_ref_to_pp_folder_path = tk.StringVar()
         self.interp_options = tk.StringVar()
@@ -133,6 +138,15 @@ class Radar_Elements:
         self.pol_to_geo_frame_open = tk.BooleanVar()
         self.pol_to_geo_content = ttk.Frame(self.pol_to_geo_frame)
         self.pol_to_geo_frame_open.set(False)
+#---------------------------------------------------------------------------------------------------
+        self.out_textbox = tk.Text(self.radar_frame)
+        self.out_textbox.configure(background='#dddddd',
+                                   cursor='arrow',
+                                   relief='flat',
+                                   height='10',
+                                   width='42',
+                                   state='disabled')
+        self.out_textbox.grid(row='10', column='0', sticky='nsew', pady='5', padx='5')
 
         default_values.set_default_values(self)
 

@@ -72,6 +72,3 @@ class Gui:
         self.Radar_Panel.ref_to_pp_main_button.configure(text='Ejecutar', width='5', state='disabled')
         self.Radar_Panel.ref_to_pp_main_button.grid(column='0', row='7', columnspan='3', sticky='ew')
 
-        self.Radar_Panel.out_textbox = tk.Text(self.Radar_Panel.radar_frame)
-        self.Radar_Panel.out_textbox.configure(background='#dddddd', relief='flat', height='10', width='42', state='disabled')
-        self.Radar_Panel.out_textbox.grid(row='10', column='0', sticky='nsew', pady='5', padx='5')

@@ -44,7 +44,7 @@ def radar_onselect(self):
     self.save_tiff_checkbox.configure(state='normal')
 
 def interpolate_on_select(self):
-    if self.save_nc_var.get() == True or self.save_tiff_var.get():
+    if self.save_nc_var.get() or self.save_tiff_var.get():
         self.interp_options_select.configure(state='normal')
     else:
         self.interp_options_select.configure(state='disabled')
@@ -67,12 +67,10 @@ def download_raw(self):
                                  gui=self)
     return out_raw_folder
 
-def convert_to_nc(self,in_raw_folder,out_folder):
+def convert_to_nc(self,in_raw_folder,out_folder,interpolate,project):
 
     self.out_textbox.insert(tk.END, "Convirtiendo archivos a netCDF4... \n")
     self.root.update()
-    interpolate = self.interp_options.get()
-
 
     folder_list = []
     file_path_lists = []
@@ -92,19 +90,31 @@ def convert_to_nc(self,in_raw_folder,out_folder):
 
     for i, out_folder in enumerate(folder_list):
         with Pool() as p:
-            p.starmap(pyart_tools.raw_to_netcdf, zip(file_path_lists[i], repeat(out_folder), repeat(interpolate)))
+            p.starmap(pyart_tools.raw_to_netcdf, zip(file_path_lists[i],
+                                                     repeat(out_folder),
+                                                     repeat(interpolate),
+                                                     repeat(project)))
 
     self.out_textbox.insert(tk.END, "Coversión finalizada \n")
     self.root.update()
+
+def nc_interpolate_unlock(self):
+    if self.raw_to_nc_conversion.get():
+        self.nc_interp_options_select.configure(state='normal')
+    else:
+        self.nc_interp_options_select.configure(state='disabled')
 
 def convert_to_nc_standalone(self):
 
     self.out_textbox.configure(state='normal')
     self.out_textbox.delete('1.0', tk.END)
+
     self.root.update()
 
     in_folder = self.in_raw_to_nc_folder_path.get()
     out_folder = self.out_raw_to_nc_folder_path.get()
+    interpolate = self.raw_to_nc_interpolate.get()
+    project = self.raw_to_nc_conversion.get()
 
     try:
         shutil.rmtree(out_folder)
@@ -112,7 +122,36 @@ def convert_to_nc_standalone(self):
     except:
         pass
 
-    convert_to_nc(self,in_folder,out_folder)
+    convert_to_nc(self,in_folder,out_folder,interpolate,project)
+    self.out_textbox.configure(state='disabled')
+
+#TODO agregar opcion de elegir variables en los netcdf
+def convert_polar_to_geo_standalone(self):
+
+    self.out_textbox.configure(state='normal')
+    self.out_textbox.delete('1.0', tk.END)
+    self.root.update()
+
+    self.out_textbox.insert(tk.END, "Agregando variables convertidas a \n")
+    self.out_textbox.insert(tk.END, "archivos netCDF4... \n")
+    self.root.update()
+
+    in_folder = self.in_polflat_folder_path.get()
+    interpolate = self.pol_to_geo_interpolate.get()
+    file_path_lists = []
+
+    for root, dirs, files in os.walk(in_folder):
+        file_paths = [os.path.join(root, file) for file in files]
+        file_path_lists.append(file_paths)
+
+    for i in range(len(file_path_lists)):
+        with Pool() as p:
+            p.starmap(polar_to_geo.antenna_to_grid, zip(file_path_lists[i],repeat(interpolate)))
+
+    self.out_textbox.insert(tk.END, "Proceso finalizado \n")
+    self.out_textbox.configure(state='disabled')
+    self.root.update()
+
 
 def convert_to_tiff(self,in_nc_folder):
 
@@ -144,6 +183,8 @@ def main_download(self):
     save_raw = self.save_raw_var.get()
     save_nc = self.save_nc_var.get()
     save_tiff = self.save_tiff_var.get()
+    interpolate = self.interp_options.get()
+    nc_project = True
 
     if save_raw == False and save_nc == False and save_tiff == False:
         self.out_textbox.insert(tk.END, "Seleccionar archivos a guardar")
@@ -163,28 +204,28 @@ def main_download(self):
 
     if save_raw == True and save_nc == True and save_tiff == False:
         raw_folder = download_raw(self)
-        convert_to_nc(self,raw_folder,nc_folder)
+        convert_to_nc(self,raw_folder,nc_folder,interpolate,nc_project)
 
     if save_raw == True and save_nc == True and save_tiff == True:
         raw_folder = download_raw(self)
-        convert_to_nc(self, raw_folder,nc_folder)
+        convert_to_nc(self, raw_folder,nc_folder,interpolate,nc_project)
         convert_to_tiff(self,nc_folder)
 
     if save_raw == False and save_nc == True and save_tiff == False:
         raw_folder = download_raw(self)
-        convert_to_nc(self, raw_folder,nc_folder)
+        convert_to_nc(self, raw_folder, nc_folder, interpolate,nc_project)
         shutil.rmtree(raw_folder)
 
     if save_raw == False and save_nc == True and save_tiff == True:
         raw_folder = download_raw(self)
-        convert_to_nc(self, raw_folder,nc_folder)
+        convert_to_nc(self, raw_folder, nc_folder, interpolate,nc_project)
         convert_to_tiff(self,nc_folder)
 
         shutil.rmtree(raw_folder)
 
     if save_raw == False and save_nc == False and save_tiff == True:
         raw_folder = download_raw(self)
-        convert_to_nc(self, raw_folder,nc_folder)
+        convert_to_nc(self, raw_folder, nc_folder, interpolate,nc_project)
         convert_to_tiff(self,nc_folder)
 
         shutil.rmtree(raw_folder)
