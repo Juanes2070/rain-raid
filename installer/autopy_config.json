@@ -95,7 +95,7 @@
   },
   {
    "optionDest": "datas",
-   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/extra_radar_tools.py;."
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/download_ideam_gui.py;."
   },
   {
    "optionDest": "datas",
@@ -115,6 +115,10 @@
   },
   {
    "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/polar_to_geo_gui.py;."
+  },
+  {
+   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/pyart_tools.py;."
   },
   {
@@ -127,7 +131,15 @@
   },
   {
    "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/raw_to_nc_gui.py;."
+  },
+  {
+   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/ref_to_pp.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/ref_to_pp_gui.py;."
   },
   {
    "optionDest": "datas",
