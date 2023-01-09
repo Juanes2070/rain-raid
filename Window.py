@@ -5,6 +5,10 @@ import Radar_GUI
 import Radar_functions_2
 import Satellite_Functions
 import ref_to_pp_settings_window
+import raw_to_nc_gui
+import download_ideam_gui
+import ref_to_pp_gui
+import polar_to_geo_gui
 
 
 class MainWindow:
@@ -92,6 +96,12 @@ class MainWindow:
         # self.RadarPanel.auto_t_radio.configure(command=autotime_click)
         # self.RadarPanel.main_button.configure(command=radar_run)
 
+        raw_to_nc_gui.Gui(self.Radar_Panel)
+        download_ideam_gui.Gui(self.Radar_Panel)
+        ref_to_pp_gui.Gui(self.Radar_Panel)
+        polar_to_geo_gui.Gui(self.Radar_Panel)
+
+
         self.Radar_Panel.out_down_folder_button.configure(
             command=lambda: get_f_path(self.Radar_Panel.out_donwload_folder_path))
         self.Radar_Panel.avail_radar_button.configure(command=radar_list)
@@ -112,6 +122,21 @@ class MainWindow:
             up_arrow=self.Radar_Panel.ref_to_pp_up_arrow,
             down_arrow=self.Radar_Panel.ref_to_pp_down_arrow,
             state_var=self.Radar_Panel.ref_to_pp_frame_open))
+
+        self.Radar_Panel.raw_to_nc_title.bind("<Button-1>", lambda event: Radar_functions_2.panel_expand(
+            panel_name=self.Radar_Panel.raw_to_nc_content,
+            row='1',
+            up_arrow=self.Radar_Panel.raw_to_nc_up_arrow,
+            down_arrow=self.Radar_Panel.raw_to_nc_down_arrow,
+            state_var=self.Radar_Panel.raw_to_nc_frame_open))
+
+        self.Radar_Panel.pol_to_geo_title.bind("<Button-1>", lambda event: Radar_functions_2.panel_expand(
+            panel_name=self.Radar_Panel.pol_to_geo_content,
+            row='1',
+            up_arrow=self.Radar_Panel.pol_to_geo_up_arrow,
+            down_arrow=self.Radar_Panel.pol_to_geo_down_arrow,
+            state_var=self.Radar_Panel.pol_to_geo_frame_open))
+
 
         # self.Radar_Panel2.in_polflat_folder_button.configure(command= lambda: get_f_path(self.Radar_Panel2.in_polflat_folder_path))
         # self.Radar_Panel2.out_polflat_folder_button.configure(command= lambda: get_f_path(self.Radar_Panel2.out_polflat_folder_path))

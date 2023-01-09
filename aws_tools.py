@@ -41,7 +41,7 @@ def radar_list(start_date,end_date,gui):
 
 
 def aws_download(file,out_folder):
-    s3 = boto3.client('s3')
+    s3 = boto3.client('s3',config=Config(signature_version=UNSIGNED))
     bucket_name = 's3-radaresideam'
     out_file = out_folder+os.path.basename(file)
     s3.download_file(bucket_name,file,out_file)
