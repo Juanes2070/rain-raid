@@ -29,7 +29,7 @@ class Module:
             row='1',
             up_arrow=self.gui.ideam_up_arrow,
             down_arrow=self.gui.ideam_down_arrow,
-            state_var=self.gui.dowload_ideam_frame_open))
+            state_var=self.gui.download_ideam_frame_open))
 
         self.gui.avail_radar_listbox.bind(
             '<<ListboxSelect>>', lambda event: radar_onselect())

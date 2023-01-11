@@ -30,7 +30,7 @@ class Gui:
         self.ref_to_pp_title_frame.grid(row=0, column=0, sticky='nsew')
 
         self.ref_to_pp_title = ttk.Label(self.ref_to_pp_title_frame)
-        self.ref_to_pp_title.configure(text="Precipitación a partir de reflectividad")
+        self.ref_to_pp_title.configure(text="Precipitación a partir de reflectividad", cursor='hand2')
         self.ref_to_pp_title.grid(row=0, column=0, sticky='w')
 
         self.up_arrow = ImageTk.PhotoImage(Image.open(res_path.resource_path("img/up_arrow.ico")))

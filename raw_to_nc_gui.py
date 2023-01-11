@@ -22,7 +22,7 @@ class Gui:
         self.raw_to_nc_title_frame.grid(row=0, column=0, sticky='nsew')
 
         self.raw_to_nc_title = ttk.Label(self.raw_to_nc_title_frame)
-        self.raw_to_nc_title.configure(text="Conversion de RAW a netCDF4")
+        self.raw_to_nc_title.configure(text="Conversion de RAW a netCDF4", cursor='hand2')
         self.raw_to_nc_title.grid(row=0, column=0, sticky='w')
 
         self.up_arrow = ImageTk.PhotoImage(Image.open(res_path.resource_path("img/up_arrow.ico")))

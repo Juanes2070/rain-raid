@@ -21,7 +21,7 @@ class Gui:
         self.pol_to_geo_title_frame.grid(row=0, column=0, sticky='nsew')
 
         self.pol_to_geo_title = ttk.Label(self.pol_to_geo_title_frame)
-        self.pol_to_geo_title.configure(text="Conversion de coordenadas polares a geográficas")
+        self.pol_to_geo_title.configure(text="Conversion de coordenadas polares a geográficas", cursor='hand2')
         self.pol_to_geo_title.grid(row=0, column=0, sticky='w')
 
         self.up_arrow = ImageTk.PhotoImage(Image.open(res_path.resource_path("img/up_arrow.ico")))

@@ -18,7 +18,7 @@ def get_folderpath(text_vaiable):
 
 def panel_expand(panel_name, row, up_arrow, down_arrow, state_var):
     if state_var.get() == False:
-        panel_name.grid(column='0', row=row)
+        panel_name.grid(column='0', row=row, sticky='nsew')
         down_arrow.grid_forget()
         up_arrow.grid(row='0',column='1')
         state_var.set(True)
