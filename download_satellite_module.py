@@ -13,6 +13,7 @@ class Module:
         self.gui = download_satellite_gui.Gui(root, satellite_frame)
         self.gui.out_textbox = out_textbox
 
+
         self.gui.mission.trace('w', lambda *args: mission_click())
         self.gui.main_button.configure(command=lambda: run())
 
@@ -24,10 +25,17 @@ class Module:
             state_var=self.gui.download_satellite_frame_open
         ))
 
-        self.gui.login_button.configure(command=lambda: login_sat_gui.Window(self.root,
-                                                                             satellite_frame,
-                                                                             self.gui.username,
-                                                                             self.gui.password))
+        self.gui.out_folder_button.configure(
+            command=lambda: Radar_functions.get_folderpath(self.gui.out_folder_path))
+
+        self.gui.login_button.configure(command=lambda: change_login_credentials())
+
+        def change_login_credentials():
+            login_window = login_sat_gui.Window(self.root,
+                                 satellite_frame,
+                                 self.gui.username,
+                                 self.gui.password)
+            login_window.login_button.configure(command=lambda: login_window.check_login())
 
         def run():
 
@@ -35,8 +43,9 @@ class Module:
             end_date = self.gui.end_date_entry.get_date()
             mission = self.gui.mission.get()
 
-            self.gui.out_textbox.insert('0.0', "Comenzando ejecución...\n")
-            self.root.update()
+            # self.gui.out_textbox.configure(state='normal')
+            #
+            # self.root.update()
 
             if mission == 'IMERG':
                 main_imerg(start_date=sta_date,
@@ -44,13 +53,13 @@ class Module:
                            out_folder=self.gui.out_folder_path.get(),
                            user=self.gui.username.get(),
                            psswrd=self.gui.password.get(),
-                           gui=self)
+                           gui=self.gui)
 
             if mission == 'CHIRPS':
                 chirps_download(start_date=sta_date,
                                 end_date=end_date,
                                 out_folder=self.gui.out_folder_path.get(),
-                                gui=self)
+                                gui=self.gui)
 
         def mission_click():
             mission = self.gui.mission.get()

@@ -19,10 +19,6 @@ class Gui:
 
         self.username = tk.StringVar()
         self.password = tk.StringVar()
-        self.username.set('juanes2070@gmail.com')
-        self.password.set('Test123456')
-
-        self.out_folder_path.set('D:/')
 
         self.download_satellite_frame = ttk.Frame(self.sat_frame)
         self.download_satellite_frame.configure(borderwidth='1', relief='ridge', padding='5')

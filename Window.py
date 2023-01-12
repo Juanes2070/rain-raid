@@ -17,6 +17,7 @@ class MainWindow:
 
         self.radar_frame = ttk.Frame(self.notebook)
         self.sat_frame = ttk.Frame(self.notebook)
+        self.sat_frame.grid_propagate(False)
 
         self.Sat_Panel = Satelite_GUI.Satelite_Elements(self.root, self.sat_frame)
         self.Radar_Panel = Radar_GUI.Radar_Elements(self.root, self.radar_frame)

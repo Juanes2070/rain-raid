@@ -16,7 +16,7 @@ class Radar_Elements:
         self.out_textbox.configure(background='#dddddd',
                                    cursor='arrow',
                                    relief='flat',
-                                   height='10',
+                                   height=10,
                                    width=42,
                                    state='disabled')
         self.out_textbox.grid(row=10, column=0, sticky='nsew', pady='5', padx='5')

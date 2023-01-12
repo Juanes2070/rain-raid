@@ -1,14 +1,15 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Dec  5 21:29:03 2022
-
-@author: Juanes
-"""
-
+import os
+import time
 import requests
 import datetime
-from bs4 import BeautifulSoup
 import tkinter as tk
+import shutil
+import multiprocessing as mp
+import concurrent.futures
+from functools import partial
+from bs4 import BeautifulSoup
+import itertools
+from itertools import repeat
 
 
 def listFD(url, ext=''):
@@ -18,6 +19,10 @@ def listFD(url, ext=''):
 
 
 def get_imerg_links(start_date, end_date):
+
+    start_date = datetime.datetime.combine(start_date, datetime.time.min)
+    end_date = datetime.datetime.combine(end_date, datetime.time.min)
+
     server_url = 'https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGHH.06/'
     interval_number = (end_date - start_date).days + 1
     file_urls = []
@@ -49,22 +54,54 @@ def get_imerg_file(file_url, user, psswrd, out_folder):
             file.write(r.content)
         return first_name
 
+def split_list(my_list, chunk_size):
+    return [list(filter(None, chunk)) for chunk in itertools.zip_longest(*[iter(my_list)]*chunk_size, fillvalue=None)]
+
 
 def main_imerg(start_date, end_date, out_folder, user, psswrd, gui):
+
+    t_start = time.perf_counter()
+
+    shutil.rmtree(out_folder)
+    os.mkdir(out_folder)
+
     links = get_imerg_links(start_date, end_date)
     total_count = len(links)
-    gui.out_text.insert(tk.END, total_count)
-    gui.out_text.insert(tk.END, " Archivos encontrados, comenzando descarga\n")
+    gui.out_textbox.configure(state='normal')
+    gui.out_textbox.delete('1.0', tk.END)
+    gui.out_textbox.insert(tk.END, total_count)
+    gui.out_textbox.insert(tk.END, " Archivos encontrados, \ncomenzando descarga...\n")
     gui.root.update()
     f_processed = 0
-    for link in links:
-        file_name = get_imerg_file(link, user, psswrd, out_folder)
-        gui.out_text.insert(tk.END, file_name +" Descargado")
-        gui.out_text.insert(tk.END, "\n")
-        f_processed += 1
-        percent = (f_processed / total_count) * 100
-        gui.progressbar['value'] = percent
-        gui.root.update()
+
+    # with concurrent.futures.ThreadPoolExecutor() as executor:
+    #     executor.map(get_imerg_file, links, repeat(user), repeat(psswrd), repeat(out_folder))
+
+    cores =mp.cpu_count()
+
+    with mp.Pool(cores*3) as p:
+        p.starmap(get_imerg_file, zip(links,
+                                      repeat(user),
+                                      repeat(psswrd),
+                                      repeat(out_folder)))
+
+    # for link in links:
+    #     file_name = get_imerg_file(link, user, psswrd, out_folder)
+        # gui.out_textbox.insert(tk.END, file_name +" Descargado")
+        # gui.out_textbox.insert(tk.END, "\n")
+        # gui.out_textbox.configure(state='disabled')
+        # f_processed += 1
+        # percent = (f_processed / total_count) * 100
+        # gui.progressbar['value'] = percent
+        # gui.root.update()
+
+    t_end = time.perf_counter()
+    toe = t_end-t_start
+    gui.out_textbox.insert(tk.END, 'Descarga finalizada. \n')
+    gui.out_textbox.insert(tk.END, 'Tiempo de ejecución:{toe:.2f} s\n'.format(toe=toe))
+    gui.out_textbox.insert(tk.END, "Archivos guardados en: \n" + out_folder)
+    gui.out_textbox.configure(state='disabled')
+    gui.root.update()
 
 
 if __name__ == '__main__':
