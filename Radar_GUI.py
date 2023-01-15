@@ -13,7 +13,8 @@ class Radar_Elements:
         self.radar_frame = frame
 
         self.out_textbox = out_box.OutTexbox(root,
-                                             self.radar_frame)
+                                             self.radar_frame,
+                                             15)
 
         self.download_ideam_module = download_ideam_module.Module(root,
                                                                   self.radar_frame,

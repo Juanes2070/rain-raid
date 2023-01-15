@@ -7,7 +7,7 @@ class Satelite_Elements:
         self.root = root
         self.satellite_frame = frame
 
-        self.out_textbox = out_box.OutTexbox(self.root,self.satellite_frame)
+        self.out_textbox = out_box.OutTexbox(self.root, self.satellite_frame, 14)
 
         self.down_satellite_module = download_satellite_module.Module(self.root,
                                                                       self.satellite_frame,

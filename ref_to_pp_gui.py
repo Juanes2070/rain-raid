@@ -18,6 +18,7 @@ class Gui:
         self.m_disd_var = tk.StringVar()
         self.b_disd_var = tk.StringVar()
         self.trunc_var = tk.StringVar()
+        self.delta_t_var = tk.StringVar()
 
         self.in_ref_to_pp_folder_path = tk.StringVar()
         self.out_ref_to_pp_folder_path = tk.StringVar()

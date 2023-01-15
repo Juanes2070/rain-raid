@@ -92,6 +92,7 @@ class Module:
             m_disd = float(self.gui.m_disd_var.get())
             b_disd = float(self.gui.b_disd_var.get())
             trunc = float(self.gui.trunc_var.get())
+            dt = float(self.gui.delta_t_var.get())
 
             arguments = zip(file_paths,
                             repeat(ref_var),
@@ -102,6 +103,7 @@ class Module:
                             repeat(b_zr),
                             repeat(a_zr),
                             repeat(trunc),
+                            repeat(dt),
                             repeat(out_folder))
 
             with Pool() as p:

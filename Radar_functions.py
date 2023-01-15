@@ -45,13 +45,13 @@ def convert_to_nc(radar_gui, in_raw_folder, out_folder, interpolate, project):
     else:
         file_path_lists.pop(0)
 
-    for i, out_folder in enumerate(folder_list):
+    for i, out_day_folder in enumerate(folder_list):
         with Pool() as p:
             p.starmap(pyart_tools.raw_to_netcdf, zip(file_path_lists[i],
-                                                     repeat(out_folder),
+                                                     repeat(out_day_folder),
                                                      repeat(interpolate)))
         if project:
-            convert_polar_to_geo(in_folder=out_folder,
+            convert_polar_to_geo(in_folder=out_day_folder,
                                  interpolate=interpolate,
                                  distance='range',
                                  azim='azimuth',
@@ -60,6 +60,7 @@ def convert_to_nc(radar_gui, in_raw_folder, out_folder, interpolate, project):
                                  lon='longitude')
 
     out_textbox_write.write(radar_gui.out_textbox, "Coversión finalizada \n")
+    out_textbox_write.write(radar_gui.out_textbox, "Archivos guardados correctamente en: \n" + out_folder)
     radar_gui.root.update()
 
 

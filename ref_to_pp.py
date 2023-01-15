@@ -3,7 +3,7 @@ import netCDF4 as nc
 import os
 
 
-def ref_to_int(dbz, m_disd, b_disd, b_zr, a_zr, mc3, bc3, trunc):
+def ref_to_int(dbz, m_disd, b_disd, b_zr, a_zr, mc3, bc3, trunc, dt):
 
     trunc_dbz2 = np.copy(dbz)
     c1_all = (1 / m_disd) * trunc_dbz2 - (b_disd / m_disd)
@@ -13,14 +13,11 @@ def ref_to_int(dbz, m_disd, b_disd, b_zr, a_zr, mc3, bc3, trunc):
     c3_all = (mc3 * c2_all + bc3)
     c3_all[c1_all <= 5.0] = 0.0
 
-    # mask_ajust = np.isnan(c3_all)
-    # c3_all[mask_ajust == True] = 0
-    # c3_all[c3_all <= 0] = 0
-    pp = c3_all * 5 / 60
-    return c3_all
+    pp = c3_all * dt / 60
+    return pp
 
 
-def nc_file_processing(file, ref_var, lat_var, lon_var, m_disd, b_disd, b_zr, a_zr, trunc, out_folder):
+def nc_file_processing(file, ref_var, lat_var, lon_var, m_disd, b_disd, b_zr, a_zr, trunc, dt,out_folder):
 
     #TODO preguntar por estos valores
     # ??? Correccion precipitacion estratiforme (?
@@ -37,7 +34,8 @@ def nc_file_processing(file, ref_var, lat_var, lon_var, m_disd, b_disd, b_zr, a_
                                a_zr=a_zr,
                                mc3=mc3,
                                bc3=bc3,
-                               trunc=trunc)
+                               trunc=trunc,
+                               dt=dt)
     name = os.path.basename(file)
     out_file = out_folder + name
     with nc.Dataset(out_file, mode='w') as out_ds:
@@ -47,7 +45,7 @@ def nc_file_processing(file, ref_var, lat_var, lon_var, m_disd, b_disd, b_zr, a_
 
         lats = out_ds.createVariable('latitude', "f4", ('latitude',))
         lons = out_ds.createVariable('longitude', "f4", ('longitude',))
-        inten = out_ds.createVariable('intensity', "f4", ('latitude', 'longitude'))
+        inten = out_ds.createVariable('precip', "f4", ('latitude', 'longitude'))
 
         lats[:] = lat
         lons[:] = lon
@@ -61,5 +59,5 @@ if __name__ == '__main__':
                        ref_var='gridded_reflectivity',
                        lat_var='gridded_latitude',
                        lon_var='gridded_longitude',
-                       trunc = 52,
+                       trunc=52,
                        out_folder=out_f)

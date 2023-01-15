@@ -16,8 +16,9 @@ class Gui:
         self.end_date = tk.StringVar()
         self.mission = tk.StringVar()
 
-        self.username = tk.StringVar()
-        self.password = tk.StringVar()
+        self.username_var = tk.StringVar()
+        self.password_var = tk.StringVar()
+        self.logged_in = tk.BooleanVar()
 
         self.download_satellite_frame = ttk.Frame(self.sat_frame)
         self.download_satellite_frame.configure(borderwidth='1', relief='ridge', padding='5')
@@ -57,7 +58,7 @@ class Gui:
                                       state='readonly',
                                       textvariable=self.mission)
 
-        self.mission_options = ['GPM_3IMERGHH', 'CHIRPS-2.0 ']
+        self.mission_options = ['GPM_3IMERGHH', 'CHIRPS-2.0']
 
         self.mission_select.configure(values=self.mission_options)
         self.mission_select.set("GPM_3IMERGHH")

@@ -5,8 +5,6 @@ import datetime
 import tkinter as tk
 import shutil
 import multiprocessing as mp
-import concurrent.futures
-from functools import partial
 from bs4 import BeautifulSoup
 import itertools
 from itertools import repeat
@@ -54,9 +52,6 @@ def get_imerg_file(file_url, user, psswrd, out_folder):
             file.write(r.content)
         return first_name
 
-def split_list(my_list, chunk_size):
-    return [list(filter(None, chunk)) for chunk in itertools.zip_longest(*[iter(my_list)]*chunk_size, fillvalue=None)]
-
 
 def main_imerg(start_date, end_date, out_folder, user, psswrd, gui):
 
@@ -72,26 +67,13 @@ def main_imerg(start_date, end_date, out_folder, user, psswrd, gui):
     gui.out_textbox.insert(tk.END, total_count)
     gui.out_textbox.insert(tk.END, " Archivos encontrados, \ncomenzando descarga...\n")
     gui.root.update()
-    f_processed = 0
 
-    # with concurrent.futures.ThreadPoolExecutor() as executor:
-    #     executor.map(get_imerg_file, links, repeat(user), repeat(psswrd), repeat(out_folder))
 
     with mp.Pool() as p:
         p.starmap(get_imerg_file, zip(links,
                                       repeat(user),
                                       repeat(psswrd),
                                       repeat(out_folder)))
-
-    # for link in links:
-    #     file_name = get_imerg_file(link, user, psswrd, out_folder)
-        # gui.out_textbox.insert(tk.END, file_name +" Descargado")
-        # gui.out_textbox.insert(tk.END, "\n")
-        # gui.out_textbox.configure(state='disabled')
-        # f_processed += 1
-        # percent = (f_processed / total_count) * 100
-        # gui.progressbar['value'] = percent
-        # gui.root.update()
 
     t_end = time.perf_counter()
     toe = t_end-t_start

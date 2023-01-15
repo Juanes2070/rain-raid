@@ -1,17 +1,19 @@
 import tkinter as tk
 import requests
 import time
+import out_textbox_write
 from tkinter import ttk
 
 class Window():
-    def __init__(self, root, sat_frame, username_var, passw_var):
+    def __init__(self, root, gui):
 
         self.root = root
-        self.sat_frame = sat_frame
         self.new_window = tk.Toplevel(self.root)
+        self.gui = gui
+        self.logged_in = self.gui.logged_in
 
-        self.username = username_var
-        self.password = passw_var
+        self.username = self.gui.username_var
+        self.password = self.gui.password_var
 
         self.login_frame = ttk.Frame(self.new_window)
         self.login_frame.configure(padding=5)
@@ -21,12 +23,6 @@ class Window():
         self.login_label.configure(text='Login EarthData')
         self.login_label.grid(column=0, row=0, columnspan=2)
 
-        # img_path = res_path.resource_path("img/question_icon.png")
-        #
-        # self.q_mark = ImageTk.PhotoImage(Image.open(img_path))
-        # self.relacion_label_q = ttk.Label(master=self.login_frame, image=self.q_mark)
-        # self.relacion_label_q.grid(column=1, row=0, sticky='w')
-        # CreateToolTip(self.relacion_label_q, text='Más información')
 
         self.username_label = ttk.Label(self.login_frame)
         self.username_label.configure(text='Usuario')
@@ -52,6 +48,8 @@ class Window():
 
 
     def check_login(self):
+        out_textbox_write.write(self.gui.out_textbox, 'Iniciando sesión...\n', True)
+        self.root.update()
         server_url = 'https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGHH.06/2020/012/3B-HHR.MS.MRG.3IMERG.20200112-S000000-E002959.0000.V06B.HDF5.nc4'
         user = self.username.get()
         password = self.password.get()
@@ -62,13 +60,15 @@ class Window():
             if r.status_code == 200:
                 self.login_check_label.configure(text='Sesión iniciada')
                 self.login_check_label.grid(row=4, column=0, columnspan=2)
-                self.root.update()
 
-                time.sleep(3)
+                time.sleep(2)
+                out_textbox_write.write(self.gui.out_textbox,'Sesion Iniciada Correctamente')
+
                 self.new_window.destroy()
-
-                login = True
+                self.logged_in.set(True)
             else:
                 self.login_check_label.configure(text='Credenciales incorrectas, intente nuevamente')
-                login = False
-        return login
+                self.login_check_label.grid(row=4, column=0, columnspan=2)
+                self.logged_in.set(False)
+            self.root.update()
+

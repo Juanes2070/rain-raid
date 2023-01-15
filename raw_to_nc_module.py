@@ -1,3 +1,4 @@
+import out_textbox_write
 import raw_to_nc_gui
 import Radar_functions
 import os
@@ -35,6 +36,7 @@ class Module:
                 self.gui.nc_interp_options_select.configure(state='disabled')
 
         def convert_to_nc_standalone():
+            out_textbox_write.write(self.gui.out_textbox,'',True)
             in_folder = self.gui.in_raw_to_nc_folder_path.get()
             out_folder = self.gui.out_raw_to_nc_folder_path.get()
             interpolate = self.gui.raw_to_nc_interpolate.get()

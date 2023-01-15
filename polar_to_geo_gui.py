@@ -62,7 +62,7 @@ class Gui:
 
         self.dist_var_combo = ttk.Combobox(self.nc_variables_frame)
         self.dist_var.set("Seleccionar carpeta de nc")
-        self.dist_var_combo.configure(cursor='arrow', exportselection=True, state='disabled',
+        self.dist_var_combo.configure(cursor='arrow', width=30, exportselection=True, state='disabled',
                                      textvariable=self.dist_var)
         self.dist_var_combo.grid(column=1, row=0, sticky='ew')
 

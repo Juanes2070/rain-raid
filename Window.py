@@ -5,13 +5,10 @@ import Radar_GUI
 import rain_raid_menu
 
 
-
 class MainWindow:
     def __init__(self, master=None):
-        # Main notebook
-        self.root = tk.Tk(master)  # Makes the window
-        self.root.wm_title("Rain-raid")  # Makes the title that will appear in the top left
-        self.root.config(background="#738678")
+        self.root = tk.Tk(master)
+        self.root.wm_title("Rain-raid")
         self.root.resizable(False, False)
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack()
@@ -27,6 +24,5 @@ class MainWindow:
         self.notebook.add(self.radar_frame, text='Radar Tools')
         self.notebook.add(self.sat_frame, text='Satellite Tools')
 
-
     def start(self):
-        self.root.mainloop()  # start monitoring and updating the GUI
+        self.root.mainloop()

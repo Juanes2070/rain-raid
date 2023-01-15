@@ -82,6 +82,14 @@ class SettingsWindow():
         self.trunc_entry.configure(width=15, textvariable=self.gui.trunc_var)
         self.trunc_entry.grid(row=1, column=1, sticky='ew')
 
+        self.delta_t_label = ttk.Label(self.additional_param_frame)
+        self.delta_t_label.configure(text='Delta de tiempo (min)')
+        self.delta_t_label.grid(row=2, column=0, sticky='w')
+
+        self.delta_t_entry = ttk.Entry(self.additional_param_frame)
+        self.delta_t_entry.configure(width=15, textvariable=self.gui.delta_t_var)
+        self.delta_t_entry.grid(row=2, column=1, sticky='ew')
+
         self.save_button = ttk.Button(self.additional_param_frame)
         self.save_button.configure(text='Guardar', command=self.settings_window.destroy)
-        self.save_button.grid(row=2, column=0, columnspan=2,sticky='ew')
+        self.save_button.grid(row=3, column=0, columnspan=2,sticky='ew')

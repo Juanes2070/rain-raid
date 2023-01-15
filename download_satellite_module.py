@@ -1,5 +1,8 @@
 import download_satellite_gui
 import login_sat_gui
+import out_textbox_write
+import requests
+import time
 from imerg_download import main_imerg
 from chirps_request import chirps_download
 
@@ -13,8 +16,8 @@ class Module:
         self.gui = download_satellite_gui.Gui(root, satellite_frame)
         self.gui.out_textbox = out_textbox
 
-
         self.gui.mission.trace('w', lambda *args: mission_click())
+        self.gui.logged_in.trace('w', lambda *args: check_login())
         self.gui.main_button.configure(command=lambda: run())
 
         Radar_functions.panel_expand(
@@ -40,9 +43,7 @@ class Module:
 
         def change_login_credentials():
             login_window = login_sat_gui.Window(self.root,
-                                 satellite_frame,
-                                 self.gui.username,
-                                 self.gui.password)
+                                                self.gui)
             login_window.login_button.configure(command=lambda: login_window.check_login())
 
         def run():
@@ -51,19 +52,16 @@ class Module:
             end_date = self.gui.end_date_entry.get_date()
             mission = self.gui.mission.get()
 
-            # self.gui.out_textbox.configure(state='normal')
-            #
-            # self.root.update()
+            if mission == 'GPM_3IMERGHH':
+                if self.gui.logged_in.get():
+                    main_imerg(start_date=sta_date,
+                               end_date=end_date,
+                               out_folder=self.gui.out_folder_path.get(),
+                               user=self.gui.username_var.get(),
+                               psswrd=self.gui.password_var.get(),
+                               gui=self.gui)
 
-            if mission == 'IMERG':
-                main_imerg(start_date=sta_date,
-                           end_date=end_date,
-                           out_folder=self.gui.out_folder_path.get(),
-                           user=self.gui.username.get(),
-                           psswrd=self.gui.password.get(),
-                           gui=self.gui)
-
-            if mission == 'CHIRPS':
+            if mission == 'CHIRPS-2.0':
                 chirps_download(start_date=sta_date,
                                 end_date=end_date,
                                 out_folder=self.gui.out_folder_path.get(),
@@ -71,10 +69,21 @@ class Module:
 
         def mission_click():
             mission = self.gui.mission.get()
-            if mission == 'CHIRPS':
+            if mission == 'CHIRPS-2.0':
                 self.gui.login_button.configure(state='disabled')
                 self.gui.login_button.configure(state='disabled')
-            elif mission == 'IMERG':
+                out_textbox_write.write(self.gui.out_textbox, '', True)
+            elif mission == 'GPM_3IMERGHH':
+                check_login()
                 self.gui.login_button.configure(state='enabled')
                 self.gui.login_button.configure(state='enabled')
             self.gui.root.update()
+
+        def check_login():
+            if self.gui.logged_in.get():
+                out_textbox_write.write(self.gui.out_textbox, 'Sesion Iniciada Correctamente', True)
+            else:
+                out_textbox_write.write(self.gui.out_textbox, 'Por favor inicie sesión en EarthData', True)
+            self.root.update()
+
+        self.gui.logged_in.set(False)

@@ -3,7 +3,7 @@ import tkinter as tk
 
 
 class OutTexbox:
-    def __init__(self, root, radar_frame):
+    def __init__(self, root, radar_frame, height):
 
         self.root = root
         self.radar_frame = radar_frame
@@ -15,7 +15,7 @@ class OutTexbox:
         self.out_textbox.configure(background='#dddddd',
                                    cursor='arrow',
                                    relief='flat',
-                                   height=14,
+                                   height=height,
                                    width=41,
                                    state='disabled')
         self.out_textbox.grid(row=0, column=0, sticky='nsew', pady='2')
