@@ -3,7 +3,8 @@ import netCDF4 as nc
 import os
 import polar_to_geo
 
-def raw_to_netcdf(in_file,out_folder,interpolate,project):
+
+def raw_to_netcdf(in_file,out_folder,interpolate):
 
     file_name = os.path.basename(in_file).split('.')[0]
     out_route = out_folder+file_name+".nc"
@@ -13,8 +14,7 @@ def raw_to_netcdf(in_file,out_folder,interpolate,project):
                             format='NETCDF4',
                             time_reference=False)
 
-    if project == True:
-        polar_to_geo.antenna_to_grid(out_route,interpolate)
+
 
 if __name__ == '__main__':
     file_path = r"D:\Downloads\pyart_test\CEM200916235306.RAW2SGY"

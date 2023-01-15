@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 import tkcalendar
 from PIL import ImageTk, Image
-from hover_info import CreateToolTip
 import res_path
 
 
@@ -52,17 +51,16 @@ class Gui:
         self.mission_label.configure(text='Misión')
         self.mission_label.grid(column=0, row=0, sticky='w')
 
-
-
         self.mission_select = ttk.Combobox(self.mission_select_frame)
         self.mission_select.configure(width=24,
                                       cursor='arrow',
                                       state='readonly',
                                       textvariable=self.mission)
 
-        # TODO colocar los nombres completos de las misiones
-        self.mission_select.configure(values='"IMERG" "CHIRPS"')
-        self.mission_select.set("IMERG")
+        self.mission_options = ['GPM_3IMERGHH', 'CHIRPS-2.0 ']
+
+        self.mission_select.configure(values=self.mission_options)
+        self.mission_select.set("GPM_3IMERGHH")
         self.mission_select.grid(column=0, row=1, sticky='ew')
 
         self.login_button = ttk.Button(self.mission_select_frame)

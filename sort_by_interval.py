@@ -4,23 +4,28 @@ from botocore import UNSIGNED
 from botocore.config import Config
 from datetime import datetime
 
-def get_s3_file_list(bucket_name,prefix):
+
+def get_s3_file_list(bucket_name, prefix):
     s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
-    object_keys = []
     response = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
     keys = []
-    for key in response['Contents']:
-        keys.append(key['Key'])
-    while response['IsTruncated']:
-        continuation_token = response['NextContinuationToken']
-        response = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix,ContinuationToken=continuation_token)
+    try:
         for key in response['Contents']:
             keys.append(key['Key'])
-    return keys
+        while response['IsTruncated']:
+            continuation_token = response['NextContinuationToken']
+            response = s3.list_objects_v2(Bucket=bucket_name, Prefix=prefix,ContinuationToken=continuation_token)
+            for key in response['Contents']:
+                keys.append(key['Key'])
+        return keys
+    except KeyError:
+        return []
 
-def get_interval_files(bucket_name,prefix,interval,threshold):
+def get_interval_files(bucket_name, prefix, interval, threshold):
 
-    route_list = get_s3_file_list(bucket_name,prefix)
+    route_list = get_s3_file_list(bucket_name, prefix)
+    if route_list == []:
+        return []
     file_list = []
     for file in route_list:
         file_list.append(os.path.basename(file))

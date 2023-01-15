@@ -17,6 +17,14 @@ class Module:
         self.gui.mission.trace('w', lambda *args: mission_click())
         self.gui.main_button.configure(command=lambda: run())
 
+        Radar_functions.panel_expand(
+            panel_name=self.gui.download_satellite_content,
+            row=1,
+            up_arrow=self.gui.satellite_up_arrow,
+            down_arrow=self.gui.satellite_down_arrow,
+            state_var=self.gui.download_satellite_frame_open
+        )
+
         self.gui.download_title.bind("<Button-1>", lambda event: Radar_functions.panel_expand(
             panel_name=self.gui.download_satellite_content,
             row=1,

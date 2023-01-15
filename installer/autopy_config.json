@@ -83,10 +83,6 @@
   },
   {
    "optionDest": "datas",
-   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/boto_test.py;."
-  },
-  {
-   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/chirps_request.py;."
   },
   {
@@ -96,6 +92,18 @@
   {
    "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/download_ideam_gui.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/download_ideam_module.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/download_satellite_gui.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/download_satellite_module.py;."
   },
   {
    "optionDest": "datas",
@@ -111,6 +119,10 @@
   },
   {
    "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/login_sat_gui.py;."
+  },
+  {
+   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/polar_to_geo.py;."
   },
   {
@@ -119,11 +131,15 @@
   },
   {
    "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/polar_to_geo_module.py;."
+  },
+  {
+   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/pyart_tools.py;."
   },
   {
    "optionDest": "datas",
-   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/Radar_functions_2.py;."
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/Radar_functions.py;."
   },
   {
    "optionDest": "datas",
@@ -135,11 +151,19 @@
   },
   {
    "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/raw_to_nc_module.py;."
+  },
+  {
+   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/ref_to_pp.py;."
   },
   {
    "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/ref_to_pp_gui.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/ref_to_pp_module.py;."
   },
   {
    "optionDest": "datas",

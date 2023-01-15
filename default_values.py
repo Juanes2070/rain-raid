@@ -1,7 +1,7 @@
 def set_default_values(radar_gui):
 
-    radar_gui.download_ideam_module.gui.start_date.set('16/09/2020')
-    radar_gui.download_ideam_module.gui.end_date.set('16/09/2020')
+    radar_gui.download_ideam_module.gui.start_date.set('11/07/2018')
+    radar_gui.download_ideam_module.gui.end_date.set('11/07/2018')
     radar_gui.download_ideam_module.gui.interval.set('60')
     radar_gui.download_ideam_module.gui.interp_options.set("No interpolar")
     radar_gui.download_ideam_module.gui.out_download_folder_path.set('D:/Downloads/AWS_TEST/')

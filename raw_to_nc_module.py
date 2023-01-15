@@ -35,11 +35,6 @@ class Module:
                 self.gui.nc_interp_options_select.configure(state='disabled')
 
         def convert_to_nc_standalone():
-            self.gui.out_textbox.configure(state='normal')
-            self.gui.out_textbox.delete('1.0', tk.END)
-
-            self.gui.root.update()
-
             in_folder = self.gui.in_raw_to_nc_folder_path.get()
             out_folder = self.gui.out_raw_to_nc_folder_path.get()
             interpolate = self.gui.raw_to_nc_interpolate.get()
@@ -48,12 +43,7 @@ class Module:
             try:
                 shutil.rmtree(out_folder)
                 os.mkdir(out_folder)
-            except:
+            except PermissionError:
                 pass
 
             Radar_functions.convert_to_nc(self.gui, in_folder, out_folder, interpolate, project)
-            self.gui.out_textbox.configure(state='disabled')
-
-
-
-

@@ -77,9 +77,7 @@ def main_imerg(start_date, end_date, out_folder, user, psswrd, gui):
     # with concurrent.futures.ThreadPoolExecutor() as executor:
     #     executor.map(get_imerg_file, links, repeat(user), repeat(psswrd), repeat(out_folder))
 
-    cores =mp.cpu_count()
-
-    with mp.Pool(cores*3) as p:
+    with mp.Pool() as p:
         p.starmap(get_imerg_file, zip(links,
                                       repeat(user),
                                       repeat(psswrd),

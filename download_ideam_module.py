@@ -1,4 +1,6 @@
+import time
 import download_ideam_gui
+import out_textbox_write
 import Radar_functions
 import aws_tools
 import tkinter as tk
@@ -70,17 +72,16 @@ class Module:
             return out_raw_folder
 
         def main_download():
-            self.gui.out_textbox.configure(state='normal')
-            self.gui.out_textbox.delete('1.0', tk.END)
-            self.gui.root.update()
 
-            # TODO Handle folder exception
+            radar_name = self.gui.selected_radar.get()
+            sta_date = self.gui.start_date_entry.get_date()
+            end_date = self.gui.end_date_entry.get_date()
             out_folder = self.gui.out_download_folder_path.get()
-
             save_raw = self.gui.save_raw_var.get()
             save_nc = self.gui.save_nc_var.get()
             save_tiff = self.gui.save_tiff_var.get()
             interpolate = self.gui.interp_options.get()
+            interval = self.gui.interval.get()
             nc_project = True
 
             if save_raw is False and save_nc is False and save_tiff is False:
@@ -88,15 +89,47 @@ class Module:
                 self.gui.root.update()
                 return
 
+            current_time = time.strftime("%H:%M:%S", time.localtime())
+            start_time = time.perf_counter()
+
+            summary_list = [current_time,
+                            'Radar seleccionado: ' + radar_name,
+                            'Fecha inicial: ' + str(sta_date),
+                            'Fecha final: ' + str(end_date),
+                            'Intervalo (min): ' + interval,
+                            'Formatos seleccionados: ']
+
+            if save_raw is True:
+                summary_list.append('RAW')
+            if save_nc is True:
+                summary_list.append('netCDF4')
+            if save_tiff is True:
+                summary_list.append('Tiff')
+            if interpolate != 'No interpolar':
+                summary_list.append('Interpolación: '+interpolate)
+            summary_list.append('Guardar en: '+out_folder)
+            summary = str()
+            for line in summary_list:
+                summary = summary+line+'\n'
+
+            out_textbox_write.write(textbox=self.gui.out_textbox,
+                                    text=summary,
+                                    delete_prev=True)
+            self.gui.root.update()
+
             try:
                 shutil.rmtree(out_folder)
+            except PermissionError:
+                error_str = 'Error: \nLa carpeta destino debe estar vacía'
+                out_textbox_write.write(self.gui.out_textbox, error_str)
+                return
+            else:
                 os.mkdir(out_folder)
                 nc_folder = out_folder + 'netCDF4/'
                 tiff_folder = out_folder + 'Tiff/'
                 os.mkdir(nc_folder)
                 os.mkdir(tiff_folder)
-            except:
-                pass
+
 
             if save_raw is True and save_nc is False and save_tiff is False:
                 download_raw()
@@ -134,7 +167,9 @@ class Module:
                 shutil.rmtree(raw_folder)
                 shutil.rmtree(nc_folder)
 
-            self.gui.out_textbox.insert(tk.END, "Archivos guardados correctamente en: \n")
-            self.gui.out_textbox.insert(tk.END, out_folder)
-            self.gui.out_textbox.configure(state='disabled')
+            end_time = time.perf_counter()
+            time_of_exec = end_time-start_time
+            out_textbox_write.write(self.gui.out_textbox, 'Tiempo de ejecución: {:.2f} s\n'.format(time_of_exec))
+            out_str ="Archivos guardados correctamente en: \n" + out_folder
+            out_textbox_write.write(self.gui.out_textbox, out_str)
             self.gui.root.update()

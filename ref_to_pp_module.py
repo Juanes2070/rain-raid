@@ -31,7 +31,7 @@ class Module:
         self.gui.out_ref_to_pp_folder_button.configure(
             command=lambda: Radar_functions.get_folderpath(self.gui.out_ref_to_pp_folder_path))
         self.gui.ref_to_pp_config_button.config(
-            command=lambda: ref_to_pp_settings_window.open_settings_window(self.gui))
+            command=lambda: ref_to_pp_settings_window.SettingsWindow(self.gui))
         self.gui.ref_to_pp_main_button.configure(
             command=lambda: run_ref_to_pp())
 
@@ -60,7 +60,6 @@ class Module:
                 self.gui.lon_var_combo.configure(state='disabled')
 
         def run_ref_to_pp():
-            # TODO programar interpolacion
             self.gui.out_textbox.configure(state='normal')
             self.gui.out_textbox.delete('1.0', tk.END)
             self.gui.out_textbox.insert(tk.END, "Comenzando ejecución...\n")
@@ -72,7 +71,7 @@ class Module:
             try:
                 shutil.rmtree(out_folder)
                 os.mkdir(out_folder)
-            except:
+            except PermissionError:
                 pass
 
             files = os.listdir(in_folder)

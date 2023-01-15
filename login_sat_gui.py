@@ -51,11 +51,6 @@ class Window():
         self.login_check_label = ttk.Label(self.login_frame)
 
 
-
-
-        def login_check():
-            pass
-
     def check_login(self):
         server_url = 'https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGHH.06/2020/012/3B-HHR.MS.MRG.3IMERG.20200112-S000000-E002959.0000.V06B.HDF5.nc4'
         user = self.username.get()
@@ -65,7 +60,6 @@ class Window():
             req = session.request('get', server_url)
             r = session.get(req.url, auth=(user, password))
             if r.status_code == 200:
-                #TODO escribir esto mejor
                 self.login_check_label.configure(text='Sesión iniciada')
                 self.login_check_label.grid(row=4, column=0, columnspan=2)
                 self.root.update()
