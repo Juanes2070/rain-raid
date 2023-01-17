@@ -69,6 +69,9 @@ class Module:
                                          interval=interval,
                                          out_folder=out_raw_folder,
                                          gui=self.gui)
+
+            out_str = "Archivos guardados correctamente en: \n" + out_folder + '\n'
+            out_textbox_write.write(self.gui.out_textbox, out_str)
             return out_raw_folder
 
         def main_download():
@@ -106,11 +109,11 @@ class Module:
             if save_tiff is True:
                 summary_list.append('Tiff')
             if interpolate != 'No interpolar':
-                summary_list.append('Interpolación: '+interpolate)
-            summary_list.append('Guardar en: '+out_folder)
+                summary_list.append('Interpolación: ' + interpolate)
+            summary_list.append('Guardar en: ' + out_folder)
             summary = str()
             for line in summary_list:
-                summary = summary+line+'\n'
+                summary = summary + line + '\n'
 
             out_textbox_write.write(textbox=self.gui.out_textbox,
                                     text=summary,
@@ -129,7 +132,6 @@ class Module:
                 tiff_folder = out_folder + 'Tiff/'
                 os.mkdir(nc_folder)
                 os.mkdir(tiff_folder)
-
 
             if save_raw is True and save_nc is False and save_tiff is False:
                 download_raw()
@@ -167,9 +169,14 @@ class Module:
                 shutil.rmtree(raw_folder)
                 shutil.rmtree(nc_folder)
 
+            if save_raw is True and save_nc is False and save_tiff is True:
+                download_raw()
+                Radar_functions.convert_to_nc(self.gui, raw_folder, nc_folder, interpolate, nc_project)
+                Radar_functions.convert_to_tiff(self.gui, nc_folder, tiff_folder)
+                shutil.rmtree(nc_folder)
+
             end_time = time.perf_counter()
-            time_of_exec = end_time-start_time
+            time_of_exec = end_time - start_time
             out_textbox_write.write(self.gui.out_textbox, 'Tiempo de ejecución: {:.2f} s\n'.format(time_of_exec))
-            out_str ="Archivos guardados correctamente en: \n" + out_folder
-            out_textbox_write.write(self.gui.out_textbox, out_str)
+
             self.gui.root.update()

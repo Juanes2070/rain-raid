@@ -15,6 +15,7 @@ class Gui:
         self.start_date = tk.StringVar()
         self.end_date = tk.StringVar()
         self.mission = tk.StringVar()
+        self.coords_var = tk.StringVar()
 
         self.username_var = tk.StringVar()
         self.password_var = tk.StringVar()
@@ -95,8 +96,21 @@ class Gui:
         self.end_date_entry.configure(cursor='arrow', textvariable=self.end_date)
         self.end_date_entry.grid(row=2, column=1, sticky='w')
 
+        # self.coords_frame = ttk.Frame(self.input_parameters_frame)
+        # self.coords_frame.grid(row=3, column=0, columnspan=2, sticky='w')
+        #
+        # self.coords_label = ttk.Label(self.coords_frame)
+        # self.coords_label.configure(text='Coordenadas límites: S,O,N,E')
+        # self.coords_label.grid(row=0, column=0)
+        #
+        # self.coords_entry = ttk.Entry(self.coords_frame)
+        # self.coords_entry.configure(textvariable=self.coords_var)
+        # self.coords_entry.grid(row=0, column=1)
+        # self.coords_var.set('-90,-180,90,180')
+
+
         self.download_folder_frame = ttk.Frame(self.input_parameters_frame)
-        self.download_folder_frame.grid(row=3, column=0,columnspan=2, sticky='w')
+        self.download_folder_frame.grid(row=4, column=0,columnspan=2, sticky='w')
 
         self.out_folder_label = ttk.Label(self.download_folder_frame)
         self.out_folder_label.configure(text='Guardar en')
@@ -112,7 +126,7 @@ class Gui:
 
         self.main_button = ttk.Button(self.input_parameters_frame)
         self.main_button.configure(text='Descargar')
-        self.main_button.grid(column=0, row=4, columnspan=2, sticky='ew')
+        self.main_button.grid(column=0, row=5, columnspan=2, sticky='ew')
 
 
 

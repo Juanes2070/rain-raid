@@ -4,9 +4,9 @@ import requests
 import datetime
 import tkinter as tk
 import shutil
+import out_textbox_write
 import multiprocessing as mp
 from bs4 import BeautifulSoup
-import itertools
 from itertools import repeat
 
 
@@ -17,7 +17,6 @@ def listFD(url, ext=''):
 
 
 def get_imerg_links(start_date, end_date):
-
     start_date = datetime.datetime.combine(start_date, datetime.time.min)
     end_date = datetime.datetime.combine(end_date, datetime.time.min)
 
@@ -54,7 +53,6 @@ def get_imerg_file(file_url, user, psswrd, out_folder):
 
 
 def main_imerg(start_date, end_date, out_folder, user, psswrd, gui):
-
     t_start = time.perf_counter()
 
     shutil.rmtree(out_folder)
@@ -62,12 +60,9 @@ def main_imerg(start_date, end_date, out_folder, user, psswrd, gui):
 
     links = get_imerg_links(start_date, end_date)
     total_count = len(links)
-    gui.out_textbox.configure(state='normal')
-    gui.out_textbox.delete('1.0', tk.END)
-    gui.out_textbox.insert(tk.END, total_count)
-    gui.out_textbox.insert(tk.END, " Archivos encontrados, \ncomenzando descarga...\n")
+    start_str = str(total_count) + " Archivos encontrados, \ncomenzando descarga...\n"
+    out_textbox_write.write(gui.out_textbox, start_str, True)
     gui.root.update()
-
 
     with mp.Pool() as p:
         p.starmap(get_imerg_file, zip(links,
@@ -76,11 +71,10 @@ def main_imerg(start_date, end_date, out_folder, user, psswrd, gui):
                                       repeat(out_folder)))
 
     t_end = time.perf_counter()
-    toe = t_end-t_start
-    gui.out_textbox.insert(tk.END, 'Descarga finalizada. \n')
-    gui.out_textbox.insert(tk.END, 'Tiempo de ejecución:{toe:.2f} s\n'.format(toe=toe))
-    gui.out_textbox.insert(tk.END, "Archivos guardados en: \n" + out_folder)
-    gui.out_textbox.configure(state='disabled')
+    toe = t_end - t_start
+    end_str = 'Descarga finalizada. \n' + 'Tiempo de ejecución:{toe:.2f} s\n'.format(
+        toe=toe) + "Archivos guardados en: \n" + out_folder
+    out_textbox_write.write(gui.out_textbox, end_str)
     gui.root.update()
 
 

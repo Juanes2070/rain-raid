@@ -4,6 +4,7 @@ import time
 import out_textbox_write
 from tkinter import ttk
 
+
 class Window():
     def __init__(self, root, gui):
 
@@ -23,7 +24,6 @@ class Window():
         self.login_label.configure(text='Login EarthData')
         self.login_label.grid(column=0, row=0, columnspan=2)
 
-
         self.username_label = ttk.Label(self.login_frame)
         self.username_label.configure(text='Usuario')
         self.username_label.grid(column=0, row=1)
@@ -37,7 +37,7 @@ class Window():
         self.password_label.grid(column=0, row=2)
 
         self.password_entry = ttk.Entry(self.login_frame)
-        self.password_entry.configure(width=40, cursor='arrow', textvariable=self.password)
+        self.password_entry.configure(width=40, cursor='arrow', show='*', textvariable=self.password)
         self.password_entry.grid(column=1, row=2, sticky='w')
 
         self.login_button = ttk.Button(self.login_frame)
@@ -45,7 +45,6 @@ class Window():
         self.login_button.grid(row=3, column=0, columnspan=2, sticky='ew')
 
         self.login_check_label = ttk.Label(self.login_frame)
-
 
     def check_login(self):
         out_textbox_write.write(self.gui.out_textbox, 'Iniciando sesión...\n', True)
@@ -62,7 +61,7 @@ class Window():
                 self.login_check_label.grid(row=4, column=0, columnspan=2)
 
                 time.sleep(2)
-                out_textbox_write.write(self.gui.out_textbox,'Sesion Iniciada Correctamente')
+                out_textbox_write.write(self.gui.out_textbox, 'Sesion Iniciada Correctamente')
 
                 self.new_window.destroy()
                 self.logged_in.set(True)
@@ -71,4 +70,3 @@ class Window():
                 self.login_check_label.grid(row=4, column=0, columnspan=2)
                 self.logged_in.set(False)
             self.root.update()
-

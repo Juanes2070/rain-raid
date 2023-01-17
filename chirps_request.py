@@ -5,16 +5,13 @@ import time as t
 import os
 import tkinter as tk
 import shutil
+import out_textbox_write
 
 
 def chirps_download(start_date, end_date, out_folder, gui):
 
-    gui.out_textbox.configure(state='normal')
-    gui.out_textbox.delete('1.0', tk.END)
-    gui.out_textbox.insert(tk.END, "Comenzando descarga...\n")
+    out_textbox_write.write(gui.out_textbox, "Comenzando descarga...\n", True)
     t_start = t.perf_counter()
-    shutil.rmtree(out_folder)
-    os.mkdir(out_folder)
 
     start_date = datetime.datetime.combine(start_date, datetime.time.min)
     end_date = datetime.datetime.combine(end_date, datetime.time.min)
@@ -100,10 +97,8 @@ def chirps_download(start_date, end_date, out_folder, gui):
 
         t_end = t.perf_counter()
         toe = t_end - t_start
-        gui.out_textbox.insert(tk.END, 'Descarga finalizada. \n')
-        gui.out_textbox.insert(tk.END, 'Tiempo de ejecución:{toe:.2f} s\n'.format(toe=toe))
-        gui.out_textbox.insert(tk.END, "Archivos guardados en: \n" + out_folder)
-        gui.out_textbox.configure(state='disabled')
+        str_out = 'Descarga finalizada. \n'+'Tiempo de ejecución:{toe:.2f} s\n'.format(toe=toe)+"Archivos guardados en: \n" + out_folder
+        out_textbox_write.write(gui.out_textbox, str_out)
         gui.root.update()
 
 

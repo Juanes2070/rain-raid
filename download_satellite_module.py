@@ -1,8 +1,8 @@
 import download_satellite_gui
 import login_sat_gui
 import out_textbox_write
-import requests
-import time
+import shutil
+import os
 from imerg_download import main_imerg
 from chirps_request import chirps_download
 
@@ -51,12 +51,20 @@ class Module:
             sta_date = self.gui.start_date_entry.get_date()
             end_date = self.gui.end_date_entry.get_date()
             mission = self.gui.mission.get()
-
+            out_folder = self.gui.out_folder_path.get()
+            try:
+                shutil.rmtree(out_folder)
+            except PermissionError:
+                error_str = 'Error: \nLa carpeta destino debe estar vacía'
+                out_textbox_write.write(self.gui.out_textbox, error_str, True)
+                return
+            else:
+                os.mkdir(out_folder)
             if mission == 'GPM_3IMERGHH':
                 if self.gui.logged_in.get():
                     main_imerg(start_date=sta_date,
                                end_date=end_date,
-                               out_folder=self.gui.out_folder_path.get(),
+                               out_folder=out_folder,
                                user=self.gui.username_var.get(),
                                psswrd=self.gui.password_var.get(),
                                gui=self.gui)
@@ -64,7 +72,7 @@ class Module:
             if mission == 'CHIRPS-2.0':
                 chirps_download(start_date=sta_date,
                                 end_date=end_date,
-                                out_folder=self.gui.out_folder_path.get(),
+                                out_folder=out_folder,
                                 gui=self.gui)
 
         def mission_click():
@@ -85,5 +93,5 @@ class Module:
             else:
                 out_textbox_write.write(self.gui.out_textbox, 'Por favor inicie sesión en EarthData', True)
             self.root.update()
-
-        self.gui.logged_in.set(False)
+        #TODO change this to false
+        self.gui.logged_in.set(True)
