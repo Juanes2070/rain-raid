@@ -11,7 +11,7 @@
   },
   {
    "optionDest": "onefile",
-   "value": true
+   "value": false
   },
   {
    "optionDest": "console",
@@ -83,7 +83,19 @@
   },
   {
    "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/cal_dates_block.py;."
+  },
+  {
+   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/chirps_request.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/coords_index.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/dates.txt;."
   },
   {
    "optionDest": "datas",
@@ -111,6 +123,10 @@
   },
   {
    "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/get_radar_limit_dates.py;."
+  },
+  {
+   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/hover_info.py;."
   },
   {
@@ -120,6 +136,14 @@
   {
    "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/login_sat_gui.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/out_box.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/out_textbox_write.py;."
   },
   {
    "optionDest": "datas",
@@ -144,6 +168,10 @@
   {
    "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/Radar_GUI.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/rain_raid_menu.py;."
   },
   {
    "optionDest": "datas",
@@ -179,10 +207,6 @@
   },
   {
    "optionDest": "datas",
-   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/Satellite_Functions.py;."
-  },
-  {
-   "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/sort_by_interval.py;."
   },
   {
@@ -196,6 +220,14 @@
   {
    "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/img;img/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/res;res/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/about_window.py;."
   }
  ],
  "nonPyinstallerOptions": {

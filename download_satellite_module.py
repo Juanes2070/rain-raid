@@ -93,5 +93,4 @@ class Module:
             else:
                 out_textbox_write.write(self.gui.out_textbox, 'Por favor inicie sesión en EarthData', True)
             self.root.update()
-        #TODO change this to false
-        self.gui.logged_in.set(True)
+        self.gui.logged_in.set(False)
