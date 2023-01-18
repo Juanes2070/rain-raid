@@ -228,6 +228,10 @@
   {
    "optionDest": "datas",
    "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/about_window.py;."
+  },
+  {
+   "optionDest": "collect_all",
+   "value": "rioxarray"
   }
  ],
  "nonPyinstallerOptions": {
