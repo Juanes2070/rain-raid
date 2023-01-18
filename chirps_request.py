@@ -3,8 +3,6 @@ import datetime
 import netCDF4 as nc
 import time as t
 import os
-import tkinter as tk
-import shutil
 import out_textbox_write
 
 

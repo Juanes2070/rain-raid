@@ -58,6 +58,10 @@ class Module:
                 error_str = 'Error: \nLa carpeta destino debe estar vacía'
                 out_textbox_write.write(self.gui.out_textbox, error_str, True)
                 return
+            except FileNotFoundError:
+                error_str = 'Error: \nRuta no encontrada, intente otra carpeta'
+                out_textbox_write.write(self.gui.out_textbox, error_str, True)
+                return
             else:
                 os.mkdir(out_folder)
             if mission == 'GPM_3IMERGHH':

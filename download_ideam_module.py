@@ -126,6 +126,10 @@ class Module:
                 error_str = 'Error: \nLa carpeta destino debe estar vacía'
                 out_textbox_write.write(self.gui.out_textbox, error_str)
                 return
+            except FileNotFoundError:
+                error_str = 'Error: \nRuta no encontrada, intente otra carpeta'
+                out_textbox_write.write(self.gui.out_textbox, error_str)
+                return
             else:
                 os.mkdir(out_folder)
                 nc_folder = out_folder + 'netCDF4/'
