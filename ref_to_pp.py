@@ -4,7 +4,6 @@ import os
 
 
 def ref_to_int(dbz, m_disd, b_disd, b_zr, a_zr, mc3, bc3, trunc, dt):
-
     trunc_dbz2 = np.copy(dbz)
     c1_all = (1 / m_disd) * trunc_dbz2 - (b_disd / m_disd)
     if trunc is not None:
@@ -14,12 +13,11 @@ def ref_to_int(dbz, m_disd, b_disd, b_zr, a_zr, mc3, bc3, trunc, dt):
     c3_all[c1_all <= 5.0] = 0.0
 
     pp = c3_all * dt / 60
-    return pp
+    return pp, c3_all
 
 
-def nc_file_processing(file, ref_var, lat_var, lon_var, m_disd, b_disd, b_zr, a_zr, trunc, dt,out_folder):
-
-    #TODO preguntar por estos valores
+def nc_file_processing(file, ref_var, lat_var, lon_var, m_disd, b_disd, b_zr, a_zr, trunc, dt, out_folder):
+    # TODO preguntar por estos valores
     # ??? Correccion precipitacion estratiforme (?
     mc3 = 1.287776431
     bc3 = 2.860530405
@@ -27,29 +25,30 @@ def nc_file_processing(file, ref_var, lat_var, lon_var, m_disd, b_disd, b_zr, a_
         ref = ds[ref_var][:]
         lat = ds[lat_var][:]
         lon = ds[lon_var][:]
-        intensity = ref_to_int(dbz=ref,
-                               m_disd=m_disd,
-                               b_disd=b_disd,
-                               b_zr=b_zr,
-                               a_zr=a_zr,
-                               mc3=mc3,
-                               bc3=bc3,
-                               trunc=trunc,
-                               dt=dt)
+        precip_values, inten_values = ref_to_int(dbz=ref,
+                                                 m_disd=m_disd,
+                                                 b_disd=b_disd,
+                                                 b_zr=b_zr,
+                                                 a_zr=a_zr,
+                                                 mc3=mc3,
+                                                 bc3=bc3,
+                                                 trunc=trunc,
+                                                 dt=dt)
     name = os.path.basename(file)
     out_file = out_folder + name
     with nc.Dataset(out_file, mode='w') as out_ds:
-
         out_ds.createDimension('latitude', len(lat))
         out_ds.createDimension('longitude', len(lon))
 
         lats = out_ds.createVariable('latitude', "f4", ('latitude',))
         lons = out_ds.createVariable('longitude', "f4", ('longitude',))
-        inten = out_ds.createVariable('precip', "f4", ('latitude', 'longitude'))
+        inten = out_ds.createVariable('intensity', "f4", ('latitude', 'longitude'))
+        precip = out_ds.createVariable('precip', "f4", ('latitude', 'longitude'))
 
         lats[:] = lat
         lons[:] = lon
-        inten[:] = intensity
+        inten[:] = inten_values
+        precip[:] = precip_values
 
 
 if __name__ == '__main__':

@@ -50,8 +50,8 @@ def get_imerg_file(file_url, user, psswrd, out_folder, bound_box):
         file_route = out_folder + first_name
         with open(file_route, 'wb') as file:
             file.write(r.content)
-        netcdf_cut.coord_index(bound_box, file_route, out_folder)
-        os.remove(file_route)
+    netcdf_cut.coord_index(bound_box, file_route, out_folder)
+    os.remove(file_route)
 
 
 def main_imerg(start_date, end_date, out_folder, user, psswrd, boundary_box, gui):

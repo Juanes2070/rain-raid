@@ -46,11 +46,11 @@ class Gui:
         self.ref_to_pp_frame_open.set(False)
 
         self.in_ref_to_pp_folder_label = ttk.Label(self.ref_to_pp_content)
-        self.in_ref_to_pp_folder_label.configure(text="Carpeta de archivos nc")
+        self.in_ref_to_pp_folder_label.configure(text="Carpeta netCDF4")
         self.in_ref_to_pp_folder_label.grid(column=0, row=1)
 
         self.in_ref_to_pp_folder_entry = ttk.Entry(self.ref_to_pp_content)
-        self.in_ref_to_pp_folder_entry.configure(cursor='arrow', width=27, textvariable=self.in_ref_to_pp_folder_path)
+        self.in_ref_to_pp_folder_entry.configure(cursor='arrow', width=32, textvariable=self.in_ref_to_pp_folder_path)
         self.in_ref_to_pp_folder_entry.grid(column=1, row=1, sticky='ew')
 
         self.in_ref_to_pp_folder_button = ttk.Button(self.ref_to_pp_content)
