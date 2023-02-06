@@ -15,7 +15,7 @@
   },
   {
    "optionDest": "console",
-   "value": true
+   "value": false
   },
   {
    "optionDest": "ascii",
@@ -232,6 +232,14 @@
   {
    "optionDest": "collect_all",
    "value": "rioxarray"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/cut_chirps.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/GDrive/Maestria/RAINRAID_V0.5/RR_0.8/netcdf_cut.py;."
   }
  ],
  "nonPyinstallerOptions": {

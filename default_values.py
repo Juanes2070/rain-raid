@@ -4,7 +4,7 @@ def set_default_values(radar_gui):
     radar_gui.download_ideam_module.gui.end_date.set('17/09/2020')
     radar_gui.download_ideam_module.gui.interval.set('60')
     radar_gui.download_ideam_module.gui.interp_options.set("No interpolar")
-    radar_gui.download_ideam_module.gui.out_download_folder_path.set('D:/Downloads/AWS_TEST/')
+    # radar_gui.download_ideam_module.gui.out_download_folder_path.set('D:/Downloads/AWS_TEST/')
 
 
     # radar_gui.ref_to_pp_module.gui.in_ref_to_pp_folder_path.set('D:/Downloads/20210301/')

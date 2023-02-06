@@ -10,6 +10,7 @@ import out_textbox_write
 def chirps_download(start_date, end_date, out_folder, bound_box, gui):
 
     out_textbox_write.write(gui.out_textbox, "Comenzando descarga...\n", True)
+    gui.root.update()
     t_start = t.perf_counter()
 
     start_date = datetime.datetime.combine(start_date, datetime.time.min)
@@ -91,7 +92,7 @@ def chirps_download(start_date, end_date, out_folder, bound_box, gui):
                             x = new_ds.createVariable(name, variable.datatype, variable.dimensions)
                             new_ds[name][:] = ds[name][i]
                 cut_chirps.coord_index(bound_box, new_nc_file_dir, out_folder)
-                #os.remove(new_nc_file_dir)
+                os.remove(new_nc_file_dir)
         os.remove(out_folder + filename)
 
 
