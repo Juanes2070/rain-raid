@@ -66,17 +66,29 @@ class Module:
                 os.mkdir(out_folder)
             if mission == 'GPM_3IMERGHH':
                 if self.gui.logged_in.get():
+                    bound_str = self.gui.coords_var.get()
+                    bound_str = bound_str.split(',')
+                    coords = []
+                    for coord in bound_str:
+                        coords.append(float(coord))
                     main_imerg(start_date=sta_date,
                                end_date=end_date,
                                out_folder=out_folder,
                                user=self.gui.username_var.get(),
                                psswrd=self.gui.password_var.get(),
+                               boundary_box=coords,
                                gui=self.gui)
 
             if mission == 'CHIRPS-2.0':
+                bound_str = self.gui.coords_var.get()
+                bound_str = bound_str.split(',')
+                coords = []
+                for coord in bound_str:
+                    coords.append(float(coord))
                 chirps_download(start_date=sta_date,
                                 end_date=end_date,
                                 out_folder=out_folder,
+                                bound_box=coords,
                                 gui=self.gui)
 
         def mission_click():
@@ -97,4 +109,5 @@ class Module:
             else:
                 out_textbox_write.write(self.gui.out_textbox, 'Por favor inicie sesión en EarthData', True)
             self.root.update()
-        self.gui.logged_in.set(False)
+        #TODO Cambiar
+        self.gui.logged_in.set(True)

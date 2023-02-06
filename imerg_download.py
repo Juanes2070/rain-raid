@@ -2,9 +2,9 @@ import os
 import time
 import requests
 import datetime
-import tkinter as tk
 import shutil
 import out_textbox_write
+import netcdf_cut
 import multiprocessing as mp
 from bs4 import BeautifulSoup
 from itertools import repeat
@@ -41,18 +41,20 @@ def get_imerg_links(start_date, end_date):
     return file_urls
 
 
-def get_imerg_file(file_url, user, psswrd, out_folder):
+def get_imerg_file(file_url, user, psswrd, out_folder, bound_box):
     with requests.Session() as session:
         req = session.request('get', file_url)
         r = session.get(req.url, auth=(user, psswrd))
         name_start = file_url.find('3B-HHR')
         first_name = file_url[name_start:]
-        with open(out_folder + first_name, 'wb') as file:
+        file_route = out_folder + first_name
+        with open(file_route, 'wb') as file:
             file.write(r.content)
-        return first_name
+        netcdf_cut.coord_index(bound_box, file_route, out_folder)
+        os.remove(file_route)
 
 
-def main_imerg(start_date, end_date, out_folder, user, psswrd, gui):
+def main_imerg(start_date, end_date, out_folder, user, psswrd, boundary_box, gui):
     t_start = time.perf_counter()
 
     shutil.rmtree(out_folder)
@@ -68,7 +70,8 @@ def main_imerg(start_date, end_date, out_folder, user, psswrd, gui):
         p.starmap(get_imerg_file, zip(links,
                                       repeat(user),
                                       repeat(psswrd),
-                                      repeat(out_folder)))
+                                      repeat(out_folder),
+                                      repeat(boundary_box)))
 
     t_end = time.perf_counter()
     toe = t_end - t_start

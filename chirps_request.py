@@ -3,10 +3,11 @@ import datetime
 import netCDF4 as nc
 import time as t
 import os
+import cut_chirps
 import out_textbox_write
 
 
-def chirps_download(start_date, end_date, out_folder, gui):
+def chirps_download(start_date, end_date, out_folder, bound_box, gui):
 
     out_textbox_write.write(gui.out_textbox, "Comenzando descarga...\n", True)
     t_start = t.perf_counter()
@@ -19,8 +20,6 @@ def chirps_download(start_date, end_date, out_folder, gui):
     start_year = start_date.year
     end_year = end_date.year
 
-    year_int = end_year - start_year
-    year_p = 0
 
     for year in range(start_year, end_year + 1, 1):
         filename = f"chirps-v2.0.{year}.days_p25.nc"
@@ -91,7 +90,10 @@ def chirps_download(start_date, end_date, out_folder, gui):
                         elif name == 'precip':
                             x = new_ds.createVariable(name, variable.datatype, variable.dimensions)
                             new_ds[name][:] = ds[name][i]
+                cut_chirps.coord_index(bound_box, new_nc_file_dir, out_folder)
+                #os.remove(new_nc_file_dir)
         os.remove(out_folder + filename)
+
 
         t_end = t.perf_counter()
         toe = t_end - t_start

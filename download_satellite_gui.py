@@ -96,18 +96,21 @@ class Gui:
         self.end_date_entry.configure(cursor='arrow', textvariable=self.end_date)
         self.end_date_entry.grid(row=2, column=1, sticky='w')
 
-        # self.coords_frame = ttk.Frame(self.input_parameters_frame)
-        # self.coords_frame.grid(row=3, column=0, columnspan=2, sticky='w')
-        #
-        # self.coords_label = ttk.Label(self.coords_frame)
-        # self.coords_label.configure(text='Coordenadas límites: S,O,N,E')
-        # self.coords_label.grid(row=0, column=0)
-        #
-        # self.coords_entry = ttk.Entry(self.coords_frame)
-        # self.coords_entry.configure(textvariable=self.coords_var)
-        # self.coords_entry.grid(row=0, column=1)
-        # self.coords_var.set('-90,-180,90,180')
+        self.coords_frame = ttk.Frame(self.input_parameters_frame)
+        self.coords_frame.grid(row=3, column=0, columnspan=2, sticky='w')
 
+        self.coords_label = ttk.Label(self.coords_frame)
+        self.coords_label.configure(text='Coordenadas límites:')
+        self.coords_label.grid(row=0, column=0)
+
+        self.coords_entry = ttk.Entry(self.coords_frame)
+        self.coords_entry.configure(textvariable=self.coords_var)
+        self.coords_entry.grid(row=0, column=1)
+        self.coords_var.set('1.5,-77.9,3.18,-75.84')
+
+        self.coords_label = ttk.Label(self.coords_frame)
+        self.coords_label.configure(text='S,O,N,E')
+        self.coords_label.grid(row=0, column=2)
 
         self.download_folder_frame = ttk.Frame(self.input_parameters_frame)
         self.download_folder_frame.grid(row=4, column=0,columnspan=2, sticky='w')
